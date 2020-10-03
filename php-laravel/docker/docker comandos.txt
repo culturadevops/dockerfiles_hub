@@ -1,0 +1,28 @@
+
+
+
+
+para buscar propiedades en el docker ejemplo IPAddress
+
+docker inspect QA-MYSQL | grep "\"IPAddress\":"
+
+docker inspect --format '{{ .NetworkSettings.IPAddress }}'  QA-MYSQL
+
+
+php laravel
+docker exec qa-rafflelatest1334 php artisan db:seed
+docker exec  qa-rafflelatest1334 php artisan migrate
+docker exec  qa-rafflelatest1334 php artisan migrate:rollback
+
+
+mysql
+
+docker run --name QA-MYSQL -d -p 3306:3306 -e MYSQL_DATABASE=mtgfolder  -e MYSQL_ROOT_PASSWORD=root -e MYSQL_USER=mtgfolder -e MYSQL_PASSWORD=secret   mysql:5.6
+docker start QA-MYSQL
+
+
+docker exec 2cc366b073d3  mysql -uroot -proot -e "create database mtgfolder"
+docker exec 495c4401abb9 mysql -uroot -proot -e "SHOW DATABASES"
+docker exec 495c4401abb9 mysql -uroot -proot -e "use raffle; drop table users"
+docker exec 495c4401abb9 mysql -uroot -proot -e "select * from information_schema.tables where table_schema = raffle"
+select * from information_schema.tables where table_schema = raffle and table_name = migrations

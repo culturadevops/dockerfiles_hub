@@ -1,0 +1,16 @@
+// docker run  -dtp 80:8080 --name  NombreDeContainer imagen
+// sudo vi /etc/systemd/system/docker-jenkins.service
+ //sudo systemctl enable docker-jenkins
+ //systemctl list-unit-files | grep enabled
+[Unit]
+Description=mi descripcion
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker start -a jenkins
+ExecStop=/usr/bin/docker stop -t 2 jenkins
+
+[Install]
+WantedBy=default.target
