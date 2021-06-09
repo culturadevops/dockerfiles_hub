@@ -1,0 +1,6 @@
+forma de construir
+docker build -t drogondev .
+
+forma iterativa de programar
+docker run -itp 8080:80 -v /home/jaivic/p/dockerfiles_hub/drogon_en_c/dev/:/app  --name containerdrogondev drogon  bash
+drogon_ctl create project application_name

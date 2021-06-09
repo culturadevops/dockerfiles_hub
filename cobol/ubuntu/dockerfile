@@ -1,0 +1,26 @@
+FROM ubuntu:latest
+
+#update and get pre-requisites
+RUN apt-get update && apt-get install -y g++ make libpq-dev libpq5 postgresql-server-dev-all \
+  open-cobol \
+  gcc
+
+RUN apt install apt-utils build-essential -y
+#RUN apt-get install  --no-install-recommends apt-utils build-essential sudo git make
+
+RUN export CPATH=/usr/include/postgresql/
+ADD https://github.com/opensourcecobol/Open-COBOL-ESQL/archive/refs/tags/v1.2.tar.gz Open-COBOL-ESQL-1.2.tar.gz
+
+RUN tar zxvf Open-COBOL-ESQL-1.2.tar.gz &&\
+    cd /Open-COBOL-ESQL-1.2 &&\
+    export CPATH=/usr/include/postgresql/  &&\
+    ./configure  --prefix=/usr/ &&\
+    make
+#copy file to image
+COPY helloworld.cbl /helloworld.cbl
+
+#compile the code
+RUN cobc -x -free -o helloworld helloworld.cbl
+
+#run
+CMD ["/helloworld"]
