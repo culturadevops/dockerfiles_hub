@@ -1,0 +1,3 @@
+docker volume create mysql-db-data
+docker run -d -p 3306:3306 --name mysql-db1  -e MYSQL_ROOT_PASSWORD=secret --mount src=mysql-db-data,dst=/var/lib/mysql mysql
+docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'
